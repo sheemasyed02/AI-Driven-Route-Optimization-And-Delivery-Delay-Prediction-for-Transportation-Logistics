@@ -1,0 +1,25 @@
+{
+    "trained_date": "2026-01-18 15:16:27",
+    "feature_columns": [
+        "distance_km",
+        "package_weight_kg",
+        "traffic_level",
+        "order_hour",
+        "order_day_of_week",
+        "order_month",
+        "scheduled_duration_hours",
+        "is_rush_hour",
+        "is_weekend",
+        "is_peak_season",
+        "distance_category",
+        "weight_category",
+        "vehicle_type_encoded",
+        "weather_condition_encoded",
+        "road_type_encoded"
+    ],
+    "models": [
+        "random_forest",
+        "xgboost",
+        "gradient_boosting"
+    ]
+}
