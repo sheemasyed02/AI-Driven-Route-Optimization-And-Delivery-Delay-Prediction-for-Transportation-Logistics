@@ -1,5 +1,5 @@
 {
-    "trained_date": "2026-01-18 15:22:26",
+    "trained_date": "2026-01-19 20:15:41",
     "feature_columns": [
         "distance_km",
         "package_weight_kg",
