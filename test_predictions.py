@@ -25,6 +25,7 @@ def test_realtime_predictions():
     r1 = pipeline.predict(d1)
     status = "Delayed" if r1['is_delayed'] else "On-time"
     print("Result:", status, "({:.1f}% prob)".format(r1['delay_probability']*100))
+
     print("\nTest 2: Low risk")
     d2 = {
         'distance_km': 50.0, 'package_weight_kg': 10.0, 'traffic_level': 3,
@@ -37,6 +38,7 @@ def test_realtime_predictions():
     r2 = pipeline.predict(d2)
     status = "Delayed" if r2['is_delayed'] else "On-time"
     print("Result:", status, "({:.1f}% prob)".format(r2['delay_probability']*100))
+    
     print("\nTest 3: Medium risk")
     d3 = {
         'distance_km': 150.0, 'package_weight_kg': 25.0, 'traffic_level': 6,

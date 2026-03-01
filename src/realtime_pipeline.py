@@ -92,7 +92,7 @@ class RealtimePredictionPipeline:
         r_enc = self.label_encoders['road_type'].transform(
             [delivery_data['road_type']]
         )[0]
-        features = np.array([[
+        raw_values = [
             delivery_data['distance_km'],
             delivery_data['package_weight_kg'],
             delivery_data['traffic_level'],
@@ -108,8 +108,9 @@ class RealtimePredictionPipeline:
             v_enc,
             w_enc,
             r_enc
-        ]])
-        features_scaled = self.scaler.transform(features)
+        ]
+        features_df = pd.DataFrame([raw_values], columns=self.feature_columns)
+        features_scaled = self.scaler.transform(features_df)
         return features_scaled
     
     def predict_delay(self, delivery_data, model_name='xgboost'):
@@ -209,7 +210,6 @@ class RealtimePredictionPipeline:
         log_file = 'logs/prediction_log.jsonl'
         with open(log_file, 'a') as f:
             f.write(json.dumps(log_entry) + '\n')
-
 def demo_realtime_pipeline():
     delivery_data = {
         'distance_km': 150.5,
@@ -221,7 +221,6 @@ def demo_realtime_pipeline():
         'weather_condition': 'Rain',
         'road_type': 'City'
     }
-    
     locations = [
         {'name': 'Warehouse', 'lat': 40.7128, 'lon': -74.0060},
         {'name': 'Customer A', 'lat': 40.7580, 'lon': -73.9855},

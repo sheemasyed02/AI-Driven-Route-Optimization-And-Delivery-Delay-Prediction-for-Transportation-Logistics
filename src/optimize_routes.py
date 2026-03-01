@@ -37,7 +37,18 @@ class RouteOptimizer:
                     )
                     self.distance_matrix[i][j] = d
         return self.distance_matrix
-    
+
+    def apply_traffic_weights(self, traffic_levels: dict):
+        if self.distance_matrix is None:
+            raise RuntimeError("Call create_distance_matrix() before apply_traffic_weights().")
+        n = len(self.distance_matrix)
+        multipliers = {i: 1.0 + (traffic_levels.get(i, 5) - 1) / 9.0 for i in range(n)}
+        for i in range(n):
+            for j in range(n):
+                if i != j:
+                    factor = max(multipliers[i], multipliers[j])
+                    self.distance_matrix[i][j] *= factor
+
     def dijkstra(self, start, end):
         n = len(self.distance_matrix)
         dist = [float('inf')] * n
@@ -199,7 +210,6 @@ class RouteOptimizer:
         
         else:
             raise ValueError(f"Unknown algorithm: {algorithm}")
-
 def demo_route_optimization():
     locations = [
         Location(0, "Warehouse", 40.7128, -74.0060),
